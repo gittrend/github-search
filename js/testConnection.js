@@ -35,14 +35,12 @@ const card = `
                 <li>
                     <div class='collapsible-header'><i class='material-icons deep-purple-text text-lighten-1'>group</i>Seguidores(as)<span class="new badge brown lighten-1" data-badge-caption="">@num_followers</span></div>
                     <div class='collapsible-body'>
-                        <span class='card-title'>@follower</span>
                         <a href='@follower_url' target='_blank'>Ver Seguidores</a>
                     </div>
                 </li>
                 <li>
                     <div class='collapsible-header'><i class="material-icons deep-purple-text text-lighten-1">group</i>Seguem<span class="new badge brown lighten-1" data-badge-caption="">@num_followings</span></div>
                     <div class='collapsible-body'>
-                        <span class='card-title'>@following</span>
                         <a href='@following_url' target='_blank'>Ver Amigos</a>
                     </div>
                 </li>
@@ -113,7 +111,7 @@ async function searchGithub(page = 0, limit = 10) {
     let count = 0;
     const query =  iptitem.value.replace(" ","+");
 
-    const opt = !filtro.value || filtro.value > '3' ?  1 : parseInt(filtro.value);
+    const opt = !filtro.value || filtro.value > '3' ?  1 : parseInt(filtro.value.trim());
 
     switch(opt) {
         case 1:
@@ -140,8 +138,6 @@ async function searchGithub(page = 0, limit = 10) {
 
                     for(item of items) {
                         const res =  await axios.get(item.url);
-                        // const followers = await axios.get(`${item.followers_url}?page=${page}&per_page=${limit=4}`);
-                        // const repos = await axios.get(`${item.subscriptions_url}?page=${page}&per_page=${limit=4}`);
                         
                         newCard = card.replace("@name",res.data.name)
                             .replace("@desc",res.data.bio)
@@ -151,22 +147,13 @@ async function searchGithub(page = 0, limit = 10) {
                             .replace("@num_repos",res.data.public_repos)
                             .replace("@num_followers",res.data.followers)
                             .replace("@num_followings",res.data.following)
-                            // for (repo of repos.data) {
-                            //     card.replace("@repo_name", repo.name)
-                            //         .replace("@repo_url", repo.html_url)
-                            // }
-                            // for (follower of followers.data) {
-                            //     card.replace("@follower",follower.name)
-                            //         .replace("@follower_url",follower.html_url)
-                            // }
+
                         
                         result.innerHTML += newCard; 
                     };
                 } else 
                 {
                     const res =  await axios.get(items[0].url);
-                    const repos = await axios.get(`${items[0].repos_url}?page=${page}&per_page=${limit=4}`);
-                    const followers = await axios.get(`${items[0].followers_url}?page=${page}&per_page=${limit=4}`);
 
                     newCard = card.replace("@avatar_url",items[0].avatar_url)
                         .replace("@sub_name",items[0].login)
@@ -176,14 +163,9 @@ async function searchGithub(page = 0, limit = 10) {
                         .replace("@num_repos",res.data.public_repos)
                         .replace("@num_followers",res.data.followers)
                         .replace("@num_followings",res.data.following)
-                        for (repo of repos.data) {
-                            card.replace("@repo_name", repo.name)
-                                .replace("@repo_url", repo.html_url)
-                        }
-                        for (follower of followers.data) {
-                            card.replace("@follower",follower.name)
-                                .replace("@follower_url",follower.html_url);
-                        }
+                        .replace("@num_followers",res.data.followers)
+                        .replace("@num_followings",res.data.following)
+
                     result.innerHTML = newCard; 
                 }
             break;
@@ -201,7 +183,6 @@ async function searchGithub(page = 0, limit = 10) {
                 }    
             } else 
             {
-                console.log(items[0].avatar_url);
                 newCard = card2.replace("@avatar_url",items[0].owner.avatar_url)
                         .replace("@title",items[0].name)
                         .replace("@name",items[0].owner.login)
