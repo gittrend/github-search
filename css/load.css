@@ -1,0 +1,170 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+body {
+    background-color: #24292e !important;
+}
+.content {
+    width: 15%;
+    height: 53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 0 rgba(black, .3);
+    transition: all 300ms ease;
+    background-color: transparent;
+}
+.loader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.dot {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    border-radius: 50%;
+    background-color: rgb(178, 122, 241);
+    margin: 0 2px;
+}
+
+
+.content .dot.four { animation: scale 800ms linear infinite }
+.content .dot.five { animation: scale 800ms linear infinite 200ms }
+.content .dot.six { animation: scale 800ms linear infinite 400ms }
+
+@keyframes scale {
+    0%, 100% { transform: scale(1) }
+    50% { transform: scale(0); background-color: rgb(243, 77, 90); }
+}
+
+
+/* Load 2 */
+.switchbox {
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  
+  .switchbox {
+    animation: spin 2s infinite linear; 
+  }
+  
+  .switch {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(109, 156, 226);
+    border-radius: 20px;
+    animation: cross 2s infinite linear;
+  }
+  
+  #switch2 {
+    animation-delay: -1s;
+  }
+  
+  
+  @keyframes spin { 
+    100% { 
+      transform: rotate(360deg); 
+    } 
+  } 
+  
+  @keyframes cross {
+    50% {
+      margin-left: 60px;
+      
+    }
+    30% {
+        background-color: #fff;
+    }
+  }
+
+  /* load 3 */
+  .bouncybox {
+    height: 100px;
+    width: 40px;
+  }
+  
+  .bouncy {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #ecf0f1;
+    animation: bouncy 2s infinite ease-in-out;
+  }
+  
+  @keyframes bouncy {
+    40% {
+      height: 40px;
+    }
+    50% {
+      transform: translate(0, 65px);
+      height: 34px;
+      border-radius: 20px;
+      background-color: #79E2B6;
+    }
+    65% {
+      height: 40px; 
+    }
+  }
+  .toast {
+    font-weight: 800;
+  }
+
+  .toast-alert {
+    background-color: rgba(105, 64, 180, 0.692);
+  }
+
+  .toast-error {
+    background-color: rgba(231, 49, 58, 0.979);
+  }
+
+  /* correção de bugs materialize */
+.input-field input[type='text']:not(.browser-default):focus {
+  border-bottom: 1px solid #fff;
+  box-shadow: 0 1px 0 0#3c3f42;
+  color: white !important;
+
+}
+.dropdown-content li > a, .dropdown-content li > span {
+color: #404B4E;
+}
+
+/* box de resultados */
+
+/* estilos btn */
+.btn {
+ margin: 0 4% 0;
+}
+.box-filtro {
+margin-top: -1px;
+}
+
+.p-10 {
+  padding: 100px;
+}
+
+.m-auto {
+  margin: 0 auto;
+}
+.mt-30{
+  margin-top: 30px;
+}
+.text-center {
+  text-align: center;
+}
+
+.card-action {
+  font-weight: 800;
+}

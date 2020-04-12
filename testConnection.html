@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Github</title>
+    <link rel="stylesheet" href="./css/materialize.min.css">
+    <link rel="stylesheet" href="./css/load.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div class="row main">
+        <div class="col s4">
+            <div class="input-field">
+                <input class="readonly white-text" type="text" id="iptitem" />
+                <label for="content">Digite sua busca</label>
+            </div>
+        </div>
+        <div class='content six col s2' id="load"></div>
+    </div>
+    <div class="row">
+        <div class="input-field col s2 box-filtro">
+            <select class="white-text" id="filtro">
+                <option value="" disabled selected>Buscar por</option>
+                <option value="1">usuario</option>
+                <option value="2">Repositório(s)</option>
+                <option value="3" disabled selected>Organização</option>
+            </select>
+            <label>Escolha um filtro para pesquisa</label>
+        </div>
+        <button class="btn waves-effect waves-green grey lighten-3 black-text" id="btnSearch">Procurar<i class="material-icons small right">search</i>
+        </button>
+    </div>
+    <div class="row container" id="result">
+        
+    </div>
+    
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<script src="./js/materialize.min.js"></script>
+<script src="./js/testConnection.js"></script>
+<script>
+</script>
+
+</html>
