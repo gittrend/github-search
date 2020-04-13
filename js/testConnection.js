@@ -2,18 +2,17 @@
 $(document).ready(function () {
     
 const htLoad1 = "<div class='loader'><div class='dot four'></div><div class='dot five'></div><div class='dot six'></div></div>";
-const htLoad2 = "<div class='switchbox item-load'><div class='switch'></div><div class='switch' id='switch2'></div></div>";
-const htLoad3 = "<div class='bouncybox col s2 item-load'><div class='bouncy'></div></div>";
+const htLoad2 = "<div class='bouncybox col s2 item-load'><div class='bouncy'></div></div>";
 
 const card = `
 <div class='col s6 m6'>
             <div class='card horizontal z-depth-2'>
-                <div class='card-image col s5 mt-30 blue-grey lighten-4'>
-                    <img src='@avatar_url'>
+                <div class='card-image col s5 blue-grey lighten-4'>
+                    <img class='mt-30' src='@avatar_url'>
                 </div>
                 <div class='card-stacked'>
                    <div class="card-header text-center position-relative">
-                    <a class='btn-floating halfway-fab waves-effect activator waves-light deep-purple lighten-1'><i class='material-icons'>assignment_ind</i></a>
+                    <a class='btn-floating halfway-fab waves-effect activator waves-light deep-purple lighten-3'><i class='material-icons'>assignment_ind</i></a>
                         <span class="card-title black-text">@name</span>
                    </div>
                     <div class='card-content p-1'>
@@ -21,7 +20,7 @@ const card = `
                         <p>@desc</p>
                     </div>
                     <div class='card-action fixed text-center'>
-                        <a href='@html_url'>Acessar Perfil</a>
+                        <a href='@html_url' target='_blank'>Acessar Perfil</a>
                     </div>
                 </div>
                 <div class='card-reveal'>
@@ -80,11 +79,14 @@ const iptitem = document.querySelector("#iptitem");
 const filtro = document.querySelector("#filtro");
 const result = document.querySelector("#result");
 
-window.onoffline = () => {statusConnnection("Você está offline")}
+window.onoffline = () => {setMessage({html:"Você está offline",classes:"purple darken-1"})}
 
-
-function statusConnnection(msg) {
-    M.toast({html:`${msg}`,classes:"purple darken-1"});
+/**
+ * 
+ * @param {Object} obj 
+ */
+function setMessage(obj) {
+    M.toast(obj);
     document.onload = document.documentURI;
 }
 
@@ -95,7 +97,7 @@ function statusConnnection(msg) {
 function load(setload = false) {
     const boxLoad = document.createElement("div");
     boxLoad.setAttribute("class","boxLoad");
-    boxLoad.innerHTML = htLoad3;
+    boxLoad.innerHTML = htLoad1;
     (setload)?  $(document.body).append(boxLoad): setTimeout(() => {$('.boxLoad').remove()},10);
 }
 
@@ -105,15 +107,13 @@ function load(setload = false) {
  * @param {String} limit 
  */
 async function searchGithub(page = 0, limit = 10) {
-    if(!iptitem.value) return M.toast({html:"Não posso buscar um valor vázio",classes: "toast toast-alert"});
+    if(!iptitem.value) return setMessage({html:"Não posso buscar um valor vázio",classes: "toast toast-alert"});
     
     load(true);
     
     let url;
     let newCard = "";
-    let count = 0;
-    const query =  iptitem.value.replace(" ","+");
-
+    const query =  iptitem.value.replace(" ","+").toLowerCase();
     const opt = !filtro.value || filtro.value > '3' ?  1 : parseInt(filtro.value.trim());
 
     switch(opt) {
@@ -141,7 +141,7 @@ async function searchGithub(page = 0, limit = 10) {
 
                     for(item of items) {
                         const res =  await axios.get(item.url);
-                        
+
                         newCard = card.replace("@name",(res.data.name)? res.data.name: "")
                             .replace("@desc",res.data.bio)
                             .replace("@avatar_url",res.data.avatar_url)
