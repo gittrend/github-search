@@ -12,10 +12,10 @@ const card = `
                 </div>
                 <div class='card-stacked'>
                    <div class="card-header text-center position-relative">
-                    <a class='btn-floating halfway-fab waves-effect activator waves-light deep-purple lighten-3'><i class='material-icons'>assignment_ind</i></a>
                         <span class="card-title black-text">@name</span>
+                        <a class='btn-floating halfway-fab waves-effect activator waves-light deep-purple lighten-3'><i class='material-icons'>assignment_ind</i></a>
                    </div>
-                    <div class='card-content p-1'>
+                    <div class='card-content p-1 auto-scroll'>
                         <p>Nome do perfil: <strong>@sub_name</strong></p>
                         <p>@desc</p>
                     </div>
@@ -53,14 +53,14 @@ const card = `
 const card2 = `
 <div class='col s6 m6'>
     <div class='card horizontal z-depth-2'>
-    <div class='card-image col s5 mt-30'>
-        <img src='@avatar_url'>
+    <div class='card-image col s5 blue-grey lighten-4'>
+        <img class='mt-30' src='@avatar_url'>
     </div>
     <div class='card-stacked'>
         <div class='card-header text-center'>
             <span class='card-title'>@title</span>
         </div>
-        <div class='card-content p-1'>
+        <div class='card-content p-1 auto-scroll'>
             <p>Nome: <strong>@name</strong></p>
             <p>Linguagem: <strong>@language</strong></p>
             <p>@desc</p>
@@ -87,7 +87,6 @@ window.onoffline = () => {setMessage({html:"Você está offline",classes:"purple
  */
 function setMessage(obj) {
     M.toast(obj);
-    document.onload = document.documentURI;
 }
 
 /**
@@ -96,7 +95,7 @@ function setMessage(obj) {
  */
 function load(setload = false) {
     const boxLoad = document.createElement("div");
-    boxLoad.setAttribute("class","boxLoad");
+    $(boxLoad).attr("class","boxLoad");
     boxLoad.innerHTML = htLoad1;
     (setload)?  $(document.body).append(boxLoad): setTimeout(() => {$('.boxLoad').remove()},10);
 }
@@ -113,6 +112,7 @@ async function searchGithub(page = 0, limit = 10) {
     
     let url;
     let newCard = "";
+    result.innerHTML = "";
     const query =  iptitem.value.replace(" ","+").toLowerCase();
     const opt = !filtro.value || filtro.value > '3' ?  1 : parseInt(filtro.value.trim());
 
@@ -133,7 +133,6 @@ async function searchGithub(page = 0, limit = 10) {
     if(response.data.total_count == 0) return (load(false), result.innerHTML = notResult);
     
     const {items} = response.data;
-    result.innerHTML = "";
     switch(opt) {
         case 1:card
                 if(items.length > 1) 
@@ -143,7 +142,7 @@ async function searchGithub(page = 0, limit = 10) {
                         const res =  await axios.get(item.url);
 
                         newCard = card.replace("@name",(res.data.name)? res.data.name: "")
-                            .replace("@desc",res.data.bio)
+                            .replace("@desc",(res.data.bio)? res.data.bio: "")
                             .replace("@avatar_url",res.data.avatar_url)
                             .replace("@sub_name",res.data.login)
                             .replace("@html_url",res.data.html_url)
@@ -179,8 +178,8 @@ async function searchGithub(page = 0, limit = 10) {
                     newCard = card2.replace("@avatar_url",item.owner.avatar_url)
                         .replace("@title",item.name)
                         .replace("@name",item.owner.login)
-                        .replace("@language",item.language)
-                        .replace("@desc",item.description)
+                        .replace("@language",(item.language)? item.language : "")
+                        .replace("@desc",(item.description)? item.description : "")
                         .replace("@html_url", (!item.private)? item.html_url : "");
                     result.innerHTML += newCard;
                 }    
@@ -189,8 +188,8 @@ async function searchGithub(page = 0, limit = 10) {
                 newCard = card2.replace("@avatar_url",items[0].owner.avatar_url)
                         .replace("@title",items[0].name)
                         .replace("@name",items[0].owner.login)
-                        .replace("@language",items[0].language)
-                        .replace("@desc",items[0].description)
+                        .replace("@language",(items[0].language)? items[0].language : "")
+                        .replace("@desc",(items[0].description)? items[0].description : "")
                         .replace("@html_url", (!items[0].private)? items[0].html_url : "");
                     result.innerHTML += newCard;
             }
