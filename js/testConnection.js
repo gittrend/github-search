@@ -1,53 +1,55 @@
 
 $(document).ready(function () {
     
-    let connection;
-
 const htLoad1 = "<div class='loader'><div class='dot four'></div><div class='dot five'></div><div class='dot six'></div></div>";
-const htLoad2 = "<div class='switchbox'><div class='switch'></div><div class='switch' id='switch2'></div></div>";
-const htLoad3 = "<div class='bouncybox col s2'><div class='bouncy'></div></div>";
+const htLoad2 = "<div class='switchbox item-load'><div class='switch'></div><div class='switch' id='switch2'></div></div>";
+const htLoad3 = "<div class='bouncybox col s2 item-load'><div class='bouncy'></div></div>";
 
 const card = `
-<div class='col s4 m3 l3'>
-    <div class='card'>
-        <div class='card-image'>
-            <img src='@avatar_url'>
-            <span class='card-title black-text'>@name</span>
-            <a class='btn-floating halfway-fab waves-effect activator waves-light deep-purple lighten-1'><i class='material-icons'>assignment_ind</i></a>
-        </div>
-        <div class='card-content'>
-            <p>Nome do perfil: <strong>@sub_name</strong></p>
-            <p>@desc</p>
-        </div>
-        <div class='card-action text-center  blue-grey lighten-4'>
-            <a href='@html_url'>Acessar Perfil</a>
-        </div>
-        <div class='card-reveal'>
-            <span class='card-title grey-text text-darken-4'>Card Title<i class='material-icons right'>close</i></span>
-            <ul class='collapsible'>
-                <li>
-                    <div class='collapsible-header'><i class='material-icons deep-purple-text text-lighten-1'>folder_open</i>Repositórios<span class="new badge brown lighten-1" data-badge-caption="public">@num_repos</span></div>
-                    <div class='collapsible-body'>
-                        <span class='card-title'>@repo_name</span>
-                        <a href=''>@repo_url< target='_blank'/a>
+<div class='col s6 m6'>
+            <div class='card horizontal z-depth-2'>
+                <div class='card-image col s5 mt-30 blue-grey lighten-4'>
+                    <img src='@avatar_url'>
+                </div>
+                <div class='card-stacked'>
+                   <div class="card-header text-center position-relative">
+                    <a class='btn-floating halfway-fab waves-effect activator waves-light deep-purple lighten-1'><i class='material-icons'>assignment_ind</i></a>
+                        <span class="card-title black-text">@name</span>
+                   </div>
+                    <div class='card-content p-1'>
+                        <p>Nome do perfil: <strong>@sub_name</strong></p>
+                        <p>@desc</p>
                     </div>
-                </li>
-                <li>
-                    <div class='collapsible-header'><i class='material-icons deep-purple-text text-lighten-1'>group</i>Seguidores(as)<span class="new badge brown lighten-1" data-badge-caption="">@num_followers</span></div>
-                    <div class='collapsible-body'>
-                        <a href='@follower_url' target='_blank'>Ver Seguidores</a>
+                    <div class='card-action fixed text-center'>
+                        <a href='@html_url'>Acessar Perfil</a>
                     </div>
-                </li>
-                <li>
-                    <div class='collapsible-header'><i class="material-icons deep-purple-text text-lighten-1">group</i>Seguem<span class="new badge brown lighten-1" data-badge-caption="">@num_followings</span></div>
-                    <div class='collapsible-body'>
-                        <a href='@following_url' target='_blank'>Ver Amigos</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>`;
+                </div>
+                <div class='card-reveal'>
+                    <span class='card-title grey-text text-darken-4'>Card Title<i class='material-icons right'>close</i></span>
+                    <ul class='collapsible' id='collapsible'>
+                        <li>
+                            <div class='collapsible-header'><i class='material-icons deep-purple-text text-lighten-1'>folder_open</i>Repositórios<span class="new badge brown lighten-1" data-badge-caption="public">@num_repos</span></div>
+                            <div class='collapsible-body'>
+                                <span class='card-title'>@repo_name</span>
+                                <a href='@repo_url' target='_blank'>Ver repositório</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='collapsible-header'><i class='material-icons deep-purple-text text-lighten-1'>group</i>Seguidores(as)<span class="new badge brown lighten-1" data-badge-caption="">@num_followers</span></div>
+                            <div class='collapsible-body'>
+                                <a href='@follower_url' target='_blank'>Ver Seguidores</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class='collapsible-header'><i class="material-icons deep-purple-text text-lighten-1">group</i>Seguem<span class="new badge brown lighten-1" data-badge-caption="">@num_followings</span></div>
+                            <div class='collapsible-body'>
+                                <a href='@following_url' target='_blank'>Ver Amigos</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>`;
 
 const card2 = `
 <div class='col s6 m6'>
@@ -74,7 +76,6 @@ const card2 = `
 const notResult = "<div class='center-align col s5  p-10  push-s3 lime lighten-2'><p>Nenhum resultado encontrado</p></div>";
 
 const btnSearch = document.querySelector("#btnSearch");
-const box_load =  document.querySelector("#load");
 const iptitem = document.querySelector("#iptitem");
 const filtro = document.querySelector("#filtro");
 const result = document.querySelector("#result");
@@ -89,11 +90,13 @@ function statusConnnection(msg) {
 
 /**
  * 
- * @param {Boolean} setload 
- * @param {Element} obj 
+ * @param {Boolean} setload
  */
-function load(obj = Element , setload = false) {
-    (setload)? obj.innerHTML = htLoad1 : setTimeout(() => {obj.innerHTML = ""},10);
+function load(setload = false) {
+    const boxLoad = document.createElement("div");
+    boxLoad.setAttribute("class","boxLoad");
+    boxLoad.innerHTML = htLoad3;
+    (setload)?  $(document.body).append(boxLoad): setTimeout(() => {$('.boxLoad').remove()},10);
 }
 
 /**
@@ -104,7 +107,7 @@ function load(obj = Element , setload = false) {
 async function searchGithub(page = 0, limit = 10) {
     if(!iptitem.value) return M.toast({html:"Não posso buscar um valor vázio",classes: "toast toast-alert"});
     
-    load(box_load,true);
+    load(true);
     
     let url;
     let newCard = "";
@@ -127,7 +130,7 @@ async function searchGithub(page = 0, limit = 10) {
 
     const response  = await axios.get(url);
     
-    if(response.data.total_count == 0) return (load(box_load), result.innerHTML = notResult);
+    if(response.data.total_count == 0) return (load(false), result.innerHTML = notResult);
     
     const {items} = response.data;
     result.innerHTML = "";
@@ -139,14 +142,14 @@ async function searchGithub(page = 0, limit = 10) {
                     for(item of items) {
                         const res =  await axios.get(item.url);
                         
-                        newCard = card.replace("@name",res.data.name)
+                        newCard = card.replace("@name",(res.data.name)? res.data.name: "")
                             .replace("@desc",res.data.bio)
                             .replace("@avatar_url",res.data.avatar_url)
                             .replace("@sub_name",res.data.login)
                             .replace("@html_url",res.data.html_url)
                             .replace("@num_repos",res.data.public_repos)
                             .replace("@num_followers",res.data.followers)
-                            .replace("@num_followings",res.data.following)
+                            .replace("@num_followings",(res.data.following)? res.data.following: "")
 
                         
                         result.innerHTML += newCard; 
@@ -158,7 +161,7 @@ async function searchGithub(page = 0, limit = 10) {
                     newCard = card.replace("@avatar_url",items[0].avatar_url)
                         .replace("@sub_name",items[0].login)
                         .replace("@html_url",items[0].html_url) 
-                        .replace("@name",res.data.name)
+                        .replace("@name",(res.data.name)? res.data.name: "")
                         .replace("@desc",res.data.bio)
                         .replace("@num_repos",res.data.public_repos)
                         .replace("@num_followers",res.data.followers)
@@ -195,7 +198,7 @@ async function searchGithub(page = 0, limit = 10) {
         case 3:
             break;
     }
-    load(box_load);
+    load(false);
 }
 
 btnSearch.onclick = () => {searchGithub()};
@@ -203,6 +206,6 @@ btnSearch.onclick = () => {searchGithub()};
 iptitem.onkeyup = (evt) => { if(evt.keyCode == 13) searchGithub() };
 
 $('select').formSelect();
-$('.collapsible').collapsible();
+$('#collapsible').collapsible();
 });
 

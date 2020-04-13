@@ -11,12 +11,23 @@
   }
 
   /* correção de bugs materialize */
-.input-field input[type='text']:not(.browser-default):focus {
+.input-field input[type='text']:not(.browser-default):focus  {
   border-bottom: 1px solid #fff;
   box-shadow: 0 1px 0 0#3c3f42;
   color: white !important;
 
 }
+
+.input-field input[type='text']:not(.browser-default):focus + label,
+.input-field input[type='text']:not(.browser-default):focus + label{
+  color: #f6f6f6;
+  font-weight: 700;
+}
+.select-wrapper + label {
+  font-size: .9em;
+  font-weight: 700;
+}
+
 .dropdown-content li > a, .dropdown-content li > span {
 color: #404B4E;
 }
@@ -45,9 +56,38 @@ margin-top: -1px;
   text-align: center;
 }
 
-.card {
+.card.horizontal  {
   height: 250px;
 }
+.card.vertical {
+  overflow: hidden;
+  max-height: 100%;
+}
+.col.card.vertical
 .card-action {
   font-weight: 800;
+}
+.boxLoad {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  z-index: 1000;
+  width: 100%;
+  height: 50vh;
+}
+
+.boxLoad > .item-load {
+  position: relative;
+  left: 48%;
+  top: 25%;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.btn-floating.halfway-fab {
+  position: absolute;
+  right: 5%;
+  bottom: -10px;
 }

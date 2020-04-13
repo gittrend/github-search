@@ -1,7 +1,6 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; 
 }
 body {
     background-color: #24292e !important;
@@ -37,9 +36,9 @@ body {
 }
 
 
-.content .dot.four { animation: scale 800ms linear infinite }
-.content .dot.five { animation: scale 800ms linear infinite 200ms }
-.content .dot.six { animation: scale 800ms linear infinite 400ms }
+.dot.four { animation: scale 800ms linear infinite }
+.dot.five { animation: scale 800ms linear infinite 200ms }
+.dot.six { animation: scale 800ms linear infinite 400ms }
 
 @keyframes scale {
     0%, 100% { transform: scale(1) }
