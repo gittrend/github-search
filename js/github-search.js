@@ -160,13 +160,14 @@ const methods = {
             
             const {items} = response.data;
             switch(opt) {
-                case 1:card
+                case 1:
                         if(items.length > 1) 
                         {
         
                             for(item of items) {
                                 const res =  await axios.get(`${BASE_URL}/users/${item.login}`);
-                                newCard = card.replace("@name",(res.data.name)? res.data.name: "")
+                                newCard = card
+                                    .replace("@name",(res.data.name)? res.data.name: "")
                                     .replace("@desc",(res.data.bio)? res.data.bio: "")
                                     .replace("@avatar_url",res.data.avatar_url)
                                     .replace("@sub_name",res.data.login)
@@ -183,7 +184,8 @@ const methods = {
                         } else 
                         {
                             const res =  await axios.get(`${BASE_URL}/users/${items[0].login}`);
-                            newCard = card.replace("@avatar_url",items[0].avatar_url)
+                            newCard = card
+                                .replace("@avatar_url",items[0].avatar_url)
                                 .replace("@sub_name",items[0].login)
                                 .replace("@html_url",items[0].html_url) 
                                 .replace("@name",(res.data.name)? res.data.name: "")
@@ -203,7 +205,8 @@ const methods = {
                     if(items.length > 1) 
                     {
                         for(item of items) {
-                            newCard = card2.replace("@avatar_url",item.owner.avatar_url)
+                            newCard = card2
+                                .replace("@avatar_url",item.owner.avatar_url)
                                 .replace("@title",item.name)
                                 .replace("@name",item.owner.login)
                                 .replace("@language",(item.language)? item.language : "")
@@ -213,7 +216,8 @@ const methods = {
                         }    
                     } else 
                     {
-                        newCard = card2.replace("@avatar_url",items[0].owner.avatar_url)
+                        newCard = card2
+                                .replace("@avatar_url",items[0].owner.avatar_url)
                                 .replace("@title",items[0].name)
                                 .replace("@name",items[0].owner.login)
                                 .replace("@language",(items[0].language)? items[0].language : "")
@@ -251,7 +255,8 @@ const methods = {
                 if(data.length > 1) 
                     {
                         for(item of data) {
-                            newCard2 = card2.replace("@avatar_url",item.owner.avatar_url)
+                            newCard2 = card2
+                                .replace("@avatar_url",item.owner.avatar_url)
                                 .replace("@title",item.name)
                                 .replace("@name",item.owner.login)
                                 .replace("@language",(item.language)? item.language : "")
@@ -261,7 +266,8 @@ const methods = {
                         }    
                     } else 
                     {
-                        newCard2 = card2.replace("@avatar_url",data[0].owner.avatar_url)
+                        newCard2 = card2
+                                .replace("@avatar_url",data[0].owner.avatar_url)
                                 .replace("@title",data[0].name)
                                 .replace("@name",data[0].owner.login)
                                 .replace("@language",(data[0].language)? data[0].language : "")
@@ -296,7 +302,8 @@ const methods = {
 
                 for(item of data) {
                     const res =  await axios.get(`${BASE_URL}/users/${item.login}`);
-                    newCard3 = card.replace("@name",(res.data.name)? res.data.name: "")
+                    newCard3 = card
+                        .replace("@name",(res.data.name)? res.data.name: "")
                         .replace("@desc",(res.data.bio)? res.data.bio: "")
                         .replace("@avatar_url",res.data.avatar_url)
                         .replace("@sub_name",res.data.login)
@@ -313,7 +320,8 @@ const methods = {
             } else 
             {
                 const res =  await axios.get(`${BASE_URL}/users/${items[0].login}`);
-                newCard3 = card.replace("@avatar_url",items[0].avatar_url)
+                newCard3 = card
+                    .replace("@avatar_url",items[0].avatar_url)
                     .replace("@sub_name",items[0].login)
                     .replace("@html_url",items[0].html_url) 
                     .replace("@name",(res.data.name)? res.data.name: "")
